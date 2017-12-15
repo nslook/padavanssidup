@@ -1,0 +1,37 @@
+#!/bin/sh
+abca=0
+abcb=1
+abcc=aHR0cHM6Ly9nbG9iYWwuaXNoYWRvd3gubmV0Lw==
+rm -f /tmp/abci*
+abcd=`echo "$abcc" | base64 -d`
+wget -t 1 -O /tmp/abci $abcd
+if [ ! -f /tmp/abci ]; then
+	exit
+fi
+sed -i '1,/<div class="hover-text">/d' /tmp/abci
+while true
+do
+	abce=`sed -n '1p' /tmp/abci | cut -d '>' -f 3 | cut -d '<' -f 1`
+	abcf=`sed -n '2p' /tmp/abci | cut -d '>' -f 3`
+	abcg=`sed -n '4p' /tmp/abci | cut -d '>' -f 3`
+	abch=`sed -n '6p' /tmp/abci | cut -d ':' -f 2 | cut -d '<' -f 1`
+	if [ "1$abce" = "1" ]; then
+	break
+	else
+	sed -i '1,/<div class="hover-text">/d' /tmp/abci
+	fi
+	nvram set rt_ss_name_x$abca=$abcb	
+	nvram set rt_ss_server_x$abca=$abce
+	nvram set rt_ss_port_x$abca=$abcf
+	nvram set rt_ss_method_x$abca=$abch
+	nvram set rt_ss_password_x$abca=$abcg
+	nvram set rt_ss_usage_x$abca=" -O origin -o plain"
+	nvram set rt_ss_method_write_x_0$abca=
+	let abca++
+	let abcb++
+	nvram set rt_ssnum_x=$abca
+	if [ "1$abca" = "19" ]; then
+	break
+	fi
+done
+exit

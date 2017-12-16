@@ -1,4 +1,12 @@
 #!/bin/sh
+ddycss=`nvram get google_fu_mode`
+if [ "1$ddycss" = "10xDEADBEEF" ]; then
+sleep 1
+else
+nvram set google_fu_mode=0xDEADBEEF
+#nvram commit
+sleep 10
+fi
 abca=0
 abcb=1
 abcc=aHR0cHM6Ly9nbG9iYWwuaXNoYWRvd3gubmV0Lw==

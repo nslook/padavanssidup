@@ -2,7 +2,7 @@
 abca=0
 abcb=1
 abcc=aHR0cHM6Ly9nbG9iYWwuaXNoYWRvd3gubmV0Lw==
-abcj=$1
+#abcj=$1
 nvram set rt_ssnum_x=0
 rm -f /tmp/abci*
 rm -f /tmp/ssget*

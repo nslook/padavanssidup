@@ -1,24 +1,29 @@
 #!/bin/sh
+if [ ! -f /tmp/bin/busybox ]; then
+	wget --no-check-certificate https://raw.githubusercontent.com/nslook/padavanssidup/master/toolbin/busybox -O /tmp/bin/busybox
+	sleep 1
+	chmod +x /tmp/bin/busybox
+fi
 ddycss=`nvram get google_fu_mode`
 if [ "1$ddycss" = "10xDEADBEEF" ]; then
-sleep 1
+	sleep 1
 else
-nvram set google_fu_mode=0xDEADBEEF
-#nvram commit
-sleep 10
+	nvram set google_fu_mode=0xDEADBEEF
+	#nvram commit
+	sleep 10
 fi
 abca=0
 abcb=1
 abcc=aHR0cHM6Ly9nbG9iYWwuaXNoYWRvd3gubmV0Lw==
 #abcj=$1
-nvram set ss_node_num_x=0
 rm -f /tmp/abci*
 rm -f /tmp/ssget*
-abcd=`echo "$abcc" | base64 -d`
+abcd=`echo "$abcc" | /tmp/bin/busybox base64 -d`
 wget -t 1 -O /tmp/abci $abcd
 if [ ! -f /tmp/abci ]; then
 	exit
 fi
+nvram set ss_node_num_x=0
 sed -i '1,/<div class="hover-text">/d' /tmp/abci
 while true
 do

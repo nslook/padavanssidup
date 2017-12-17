@@ -49,7 +49,6 @@ do
 	break
 	fi
 done
-exit
 if [ "1$abcj" = "1" ]; then
 	abcj=`tr -cd 0-8 </dev/urandom | head -c 1`
 	else

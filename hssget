@@ -55,6 +55,12 @@ if [ "1$abck" = "1$abcl" ] && [ "1$abcm" = "1$abcn" ]; then
 	nvram set ss_method=`nvram get rt_ss_method_x$abcj`
 	#nvram commit
 	logger -t "【SS】" "已设置新服务器、端口、密码！！！"
+fi
+sspower=`nvram get ss_enable`
+if [ "1$sspower" = "10" ]; then
+	logger -t "【SS】" "当前SS还未启动！！！"
+	exit
+	else
 	/etc/storage/ez_buttons_script.sh cleanss
 fi
 #下次更新添加自守护模式,abco

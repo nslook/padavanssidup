@@ -1,0 +1,124 @@
+#!/bin/sh
+abcc=aHR0cHM6Ly9nbG9iYWwuaXNoYWRvd3gubmV0Lw==
+abcj=$1
+abc_start()
+{
+abca=0
+abcb=1
+rm -f /tmp/abci*
+#rm -f /tmp/ssget*
+abcd=`echo "$abcc" | base64 -d`
+wget -q -t 1 -O /tmp/abci $abcd
+if [ ! -f /tmp/abci ]; then
+	sleep 60
+	abc_keep
+fi
+nvram set rt_ssnum_x=0
+sed -i '1,/<div class="hover-text">/d' /tmp/abci
+while true
+do
+	abce=`sed -n '1p' /tmp/abci | cut -d '>' -f 3 | cut -d '<' -f 1`
+	abcf=`sed -n '2p' /tmp/abci | cut -d '>' -f 3`
+	abcg=`sed -n '4p' /tmp/abci | cut -d '>' -f 3`
+	abch=`sed -n '6p' /tmp/abci | cut -d ':' -f 2 | cut -d '<' -f 1`
+	if [ "1$abce" = "1" ]; then
+	break
+	else
+	sed -i '1,/<div class="hover-text">/d' /tmp/abci
+	fi
+	nvram set rt_ss_name_x$abca=$abcb	
+	nvram set rt_ss_server_x$abca=$abce
+	nvram set rt_ss_port_x$abca=$abcf
+	nvram set rt_ss_method_x$abca=$abch
+	nvram set rt_ss_password_x$abca=$abcg
+	nvram set rt_ss_usage_x$abca=" -O origin -o plain"
+	nvram set rt_ss_method_write_x_0$abca=
+	let abca++
+	let abcb++
+	nvram set rt_ssnum_x=$abca
+	if [ "1$abca" = "19" ]; then
+	break
+	fi
+done
+if [ "1$abcj" = "1" ]; then
+	abcj=`tr -cd 0-8 </dev/urandom | head -c 1`
+	else
+	let abcj--
+fi
+abck=`nvram get rt_ss_password_x$abcj`
+abcl=`nvram get ss_key`
+abcm=`nvram get rt_ss_server_x$abcj`
+abcn=`nvram get ss_server`
+if [ "1$abck" = "1$abcl" ] && [ "1$abcm" = "1$abcn" ]; then
+	logger -t "【SS】" "无需更新"
+	abc_keep
+	else
+	nvram set ss_server=`nvram get rt_ss_server_x$abcj`
+	nvram set ss_server_port=`nvram get rt_ss_port_x$abcj`
+	nvram set ss_key=`nvram get rt_ss_password_x$abcj`
+	nvram set ss_method=`nvram get rt_ss_method_x$abcj`
+	#nvram commit
+	logger -t "【SS】" "已设置新服务器、端口、密码！！！"
+fi
+sspower=`nvram get ss_enable`
+if [ "1$sspower" = "10" ]; then
+	logger -t "【SS】" "当前SS还未启动！！！"
+	abc_keep2
+else
+	/etc/storage/ez_buttons_script.sh cleanss
+fi
+abc_keep
+}
+
+abc_keep2()
+{
+while true
+do
+	sleep 600
+	sspower=`nvram get ss_enable`
+	if [ "1$sspower" = "10" ]; then
+		sleep 1
+	else
+		break
+	fi
+done
+abc_keep
+}
+
+abc_keep()
+{
+while true
+do
+	abcdd=0
+	abcgg=0
+	wget --no-check-certificate -q -T 10 "www.baidu.com" -O /dev/null;[ "$?" == "0" ] && abcdd=1
+	wget --no-check-certificate -q -T 10 "www.google.com.hk" -O /dev/null;[ "$?" == "0" ] && abcgg=1
+	if [ "$abcdd" == "0" ] && [ "$abcgg" == "0" ]; then
+		logger -t "【SS】" "网络瘫痪了"
+		sleep 60
+	fi
+	
+	if [ "$abcdd" == "1" ] && [ "$abcgg" == "0" ]; then
+		logger -t "【SS】" "百度开、谷歌关。失败 $abco 次"
+		let abco++
+		sleep 10
+	fi
+	
+	if [ "$abcdd" == "1" ] && [ "$abcgg" == "1" ]; then
+		logger -t "【SS】" "网络全球通"
+		abco=1
+		sleep 300
+	fi
+	
+	if [ "$abco" == "6" ]; then
+		abco=1
+		break
+	fi
+done
+abc_start
+}
+
+#默认参数3
+abco=3
+logger -t "【SS】" "开启自动获取免费SS节点脚本（无人值守版）"
+abc_keep

@@ -1,6 +1,7 @@
 #!/bin/sh
 abcc=aHR0cHM6Ly9nbG9iYWwuaXNoYWRvd3gubmV0Lw==
 abcj=$1
+rm -f /tmp/ssget*
 abc_start()
 {
 abca=0

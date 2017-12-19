@@ -8,4 +8,4 @@ rm -f /tmp/ssget*
 nvram set abcss_enable=1
 nvram set abcss_run=1
 wget --no-check-certificate -q https://www.baidu.com -O /tmp/abci
-wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/hiboypadavan/autohssget -O /tmp/ssget1.sh;sh /tmp/ssget1.sh 4 &
+wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/hiboypadavan/autohssget -O /tmp/ssget1.sh;sh /tmp/ssget1.sh &

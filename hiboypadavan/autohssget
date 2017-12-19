@@ -91,6 +91,11 @@ abc_keep()
 {
 while true
 do
+	abcsssspower=`nvram get abcss_enable`
+	if [ "1$abcsssspower" = "10" ]; then
+		logger -t "【SS】" "关闭--自动获取免费SS节点脚本（无人值守版）"
+		exit
+	fi
 	abcdd=0
 	abcgg=0
 	wget --no-check-certificate -q -T 10 "www.baidu.com" -O /dev/null;[ "$?" == "0" ] && abcdd=1
@@ -122,5 +127,5 @@ abc_start
 
 #默认参数3
 abco=3
-logger -t "【SS】" "开启自动获取免费SS节点脚本（无人值守版）"
+logger -t "【SS】" "开启--自动获取免费SS节点脚本（无人值守版）"
 abc_keep

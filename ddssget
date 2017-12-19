@@ -19,10 +19,7 @@ abcc=aHR0cHM6Ly9nbG9iYWwuaXNoYWRvd3gubmV0Lw==
 rm -f /tmp/abci*
 rm -f /tmp/ssget*
 abcd=`echo "$abcc" | /tmp/bin/busybox base64 -d`
-#wget -t 1 -O /tmp/abci $abcd
-
 wget --no-check-certificate -q $abcd -O /tmp/abci
-
 if [ ! -f /tmp/abci ]; then
 	exit
 fi

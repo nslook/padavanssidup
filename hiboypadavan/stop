@@ -1,4 +1,4 @@
 #!/bin/sh
-nvram set abcss_enable=0
+nvram set abcss_run=0
 logger -t "【SS】" "5分钟中内关闭--自动获取免费SS节点脚本（无人值守版）"
 rm -f /tmp/ssget*

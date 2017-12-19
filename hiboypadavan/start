@@ -1,7 +1,9 @@
 #!/bin/sh
-killall ssget.sh
-killall -9 ssget.sh
+abcsssspower=`nvram get abcss_enable`
+if [ "1$abcsssspower" = "11" ]; then
+  logger -t "【SS】" "运行中--自动获取免费SS节点脚本（无人值守版）"
+  exit
+fi
 rm -f /tmp/ssget*
-nvram set abcss_start=1
-sleep 2
+nvram set abcss_enable=1
 wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/hiboypadavan/autohssget -O /tmp/ssget1.sh;sh /tmp/ssget1.sh 4 &

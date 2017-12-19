@@ -65,7 +65,7 @@ abcl=`nvram get ss_key`
 abcm=`nvram get rt_ss_server_x$abcj`
 abcn=`nvram get ss_server`
 if [ "1$abck" = "1$abcl" ] && [ "1$abcm" = "1$abcn" ]; then
-	logger -t "【全自动SS获取脚本】" "脚本状态：服务器、密码相同，不更新"
+	#logger -t "【全自动SS获取脚本】" "脚本状态：服务器、密码相同，不更新"
 	abc_keep
 	else
 	nvram set ss_server=`nvram get rt_ss_server_x$abcj`
@@ -129,12 +129,12 @@ do
 	
 	if [ "$abcdd" == "1" ] && [ "$abcgg" == "0" ]; then
 		let abco++
-		logger -t "【全自动SS获取脚本】" "SS服务器：$abcm 检测失败 $abco 次，失败 $abcp 次后重新获取"
+		logger -t "【全自动SS获取脚本】" "SS服务器检测失败 $abco 次，失败 $abcp 次后重新获取"
 		sleep 30
 	fi
 	
 	if [ "$abcdd" == "1" ] && [ "$abcgg" == "1" ]; then
-		logger -t "【全自动SS获取脚本】" "网络全球通"
+		#logger -t "【全自动SS获取脚本】" "网络全球通"
 		abco=0
 		sleep 300
 	fi

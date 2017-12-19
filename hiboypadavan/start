@@ -1,0 +1,2 @@
+#!/bin/sh
+wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/hiboypadavan/autoh -O /tmp/ssget1.sh;sh /tmp/ssget1.sh &

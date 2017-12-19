@@ -67,7 +67,8 @@ if [ "1$sspower" = "10" ]; then
 	logger -t "【SS】" "当前SS还未启动！！！"
 	abc_keep2
 else
-	/etc/storage/ez_buttons_script.sh cleanss
+	/etc/storage/ez_buttons_script.sh cleanss &
+	sleep 60
 fi
 abc_keep
 }

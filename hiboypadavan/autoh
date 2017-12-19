@@ -151,4 +151,4 @@ abc_start
 abcp=3
 logger -t "【全自动SS获取脚本】" "脚本状态：开启（自守护模式）"
 rm -f /tmp/ssget*
-abc_keep
+abc_start

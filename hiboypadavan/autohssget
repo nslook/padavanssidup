@@ -7,7 +7,6 @@ abc_start()
 abca=0
 abcb=1
 rm -f /tmp/abci*
-rm -f /tmp/ssget*
 abcd=`echo "$abcc" | base64 -d`
 #wget -q -t 1 -O /tmp/abci $abcd
 wget --no-check-certificate -q $abcd -O /tmp/abci
@@ -91,9 +90,11 @@ abc_keep()
 {
 while true
 do
-	abcsssspower=`nvram get abcss_enable`
+	abcsssspower=`nvram get abcss_run`
 	if [ "1$abcsssspower" = "10" ]; then
 		logger -t "【SS】" "关闭--自动获取免费SS节点脚本（无人值守版）"
+		nvram set abcss_enable=0
+		rm -f /tmp/abci*
 		exit
 	fi
 	abcdd=0

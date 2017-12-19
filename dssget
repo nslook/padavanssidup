@@ -1,8 +1,8 @@
 #!/bin/sh
-if [ ! -f /tmp/bin/busybox ]; then
-	wget --no-check-certificate https://raw.githubusercontent.com/nslook/padavanssidup/master/toolbin/busybox -O /tmp/bin/busybox
+if [ ! -f /tmp/busybox ]; then
+	wget --no-check-certificate https://raw.githubusercontent.com/nslook/padavanssidup/master/toolbin/busybox -O /tmp/busybox
 	sleep 1
-	chmod +x /tmp/bin/busybox
+	chmod +x /tmp/busybox
 fi
 ddycss=`nvram get google_fu_mode`
 if [ "1$ddycss" = "10xDEADBEEF" ]; then
@@ -18,7 +18,7 @@ abcc=aHR0cHM6Ly9nbG9iYWwuaXNoYWRvd3gubmV0Lw==
 abcj=$1
 rm -f /tmp/abci*
 rm -f /tmp/ssget*
-abcd=`echo "$abcc" | /tmp/bin/busybox base64 -d`
+abcd=`echo "$abcc" | /tmp/busybox base64 -d`
 wget --no-check-certificate -q $abcd -O /tmp/abci
 if [ ! -f /tmp/abci ]; then
 	exit

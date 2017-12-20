@@ -1,5 +1,15 @@
 #!/bin/sh
 abcj=$1
+if [ "1$abcj" = "1del" ]; then
+	nvram set abcss_run=0
+	sed -i '/sleep/d' /etc/storage/post_wan_script.sh
+	sed -i '/ssget/d' /etc/storage/post_wan_script.sh
+	rm -f /etc/storage/ssget.sh
+	rm -f /tmp/ssget*
+	nvram set rt_ssnum_x=0
+	logger -t "【全自动SS获取脚本】" "脚本已卸载！5分钟中内关闭后台运行脚本"
+	exit
+fi
 if [ "1$abcj" = "1stop" ]; then
 	nvram set abcss_run=0
 	logger -t "【全自动SS获取脚本】" "脚本状态：5分钟中内关闭脚本"

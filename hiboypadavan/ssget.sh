@@ -20,6 +20,7 @@ if [ "1$abcj" = "1install" ]; then
  	logger -t "【全自动SS获取脚本】" "启动脚本（无人值守版）！"
  	sh /etc/storage/ssget.sh &
 	rm -f /tmp/ssget*
+	mtd_storage.sh save
 	exit
 fi
 

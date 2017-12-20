@@ -1,20 +1,19 @@
 #!/bin/sh
-#此脚本配置只需运行一次(hiboy老毛子固件专用)#
-#安装、重装运行： wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/hiboypadavan/setting -O /tmp/ssget1.sh;sh /tmp/ssget1.sh
+#此脚本配置只需运行一次(hiboy老毛子固件专用)
+#安装、重装运行命令：wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/hiboypadavan/setting -O /tmp/ssget1.sh;sh /tmp/ssget1.sh
 sed -i '/sleep/d' /etc/storage/post_wan_script.sh
 sed -i '/ssget/d' /etc/storage/post_wan_script.sh
 cat >> /etc/storage/post_wan_script.sh << EOF
 sleep 80
-sh /etc/storage/ssget.sh &
+sh /etc/storage/ssget.sh 4 &
 EOF
 rm -f /etc/storage/ssget.sh
 wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/hiboypadavan/autoh -O /etc/storage/ssget.sh
-wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/hiboypadavan/del -O /etc/storage/ssgetdel.sh
 sleep 2
-if [ -f /etc/storage/ssget.sh ] && [ -f /etc/storage/ssgetdel.sh ]; then
-  logger -t "【全自动SS获取脚本】" "全自动SS设置安装成功！卸载命令：sh /etc/storage/ssgetdel.sh"
-  logger -t "【全自动SS获取脚本】" "准备启动脚本。停止脚本命令：sh /etc/storage/ssget.sh stop"
-  sh /etc/storage/ssget.sh &
+if [ -f /etc/storage/ssget.sh ]; then
+  logger -t "【全自动SS获取脚本】" "全自动SS设置安装成功！卸载命令：sh /etc/storage/ssget.sh del"
+  logger -t "【全自动SS获取脚本】" "准备启动脚本！停止运行命令：sh /etc/storage/ssget.sh stop"
+  sh /etc/storage/ssget.sh 4 &
   else
   logger -t "【全自动SS获取脚本】" "全自动SS设置安装失败！"
 fi

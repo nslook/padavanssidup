@@ -56,22 +56,23 @@ do
 	fi
 done
 if [ "$abcj" -gt "0" ] && [ "$abcj" -lt "10" ]; then
-	let abcj--
+	abcq=abcj
+	let abcq--
 	else
-	abcj=`tr -cd 0-8 </dev/urandom | head -c 1`
+	abcq=`tr -cd 0-8 </dev/urandom | head -c 1`
 fi
-abck=`nvram get rt_ss_password_x$abcj`
+abck=`nvram get rt_ss_password_x$abcq`
 abcl=`nvram get ss_key`
-abcm=`nvram get rt_ss_server_x$abcj`
+abcm=`nvram get rt_ss_server_x$abcq`
 abcn=`nvram get ss_server`
 if [ "1$abck" = "1$abcl" ] && [ "1$abcm" = "1$abcn" ]; then
 	#logger -t "【全自动SS获取脚本】" "脚本状态：服务器、密码相同，不更新"
 	abc_keep
 	else
-	nvram set ss_server=`nvram get rt_ss_server_x$abcj`
-	nvram set ss_server_port=`nvram get rt_ss_port_x$abcj`
-	nvram set ss_key=`nvram get rt_ss_password_x$abcj`
-	nvram set ss_method=`nvram get rt_ss_method_x$abcj`
+	nvram set ss_server=`nvram get rt_ss_server_x$abcq`
+	nvram set ss_server_port=`nvram get rt_ss_port_x$abcq`
+	nvram set ss_key=`nvram get rt_ss_password_x$abcq`
+	nvram set ss_method=`nvram get rt_ss_method_x$abcq`
 	#nvram commit
 	logger -t "【全自动SS获取脚本】" "脚本状态：更新服务器、端口、密码！！！"
 fi
@@ -147,8 +148,8 @@ done
 abc_start
 }
 
-#默认参数3
-abcp=3
+#默认参数5
+abcp=5
 logger -t "【全自动SS获取脚本】" "脚本状态：开启（自守护模式）"
 rm -f /tmp/ssget*
 abc_start

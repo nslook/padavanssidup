@@ -15,8 +15,8 @@ if [ "1$abcj" = "1install" ]; then
 	cp /tmp/ssget.sh /etc/storage/ssget.sh
 	#wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/hiboypadavan/ssget.sh -O /etc/storage/ssget.sh
 	logger -t "【全自动SS获取脚本】" "全自动免费SS获取脚本（无人值守版）安装成功！"
-  logger -t "【全自动SS获取脚本】" "停止运行命令：sh /etc/storage/ssget.sh stop"
-  logger -t "【全自动SS获取脚本】" "卸载命令：sh /etc/storage/ssget.sh del"
+	logger -t "【全自动SS获取脚本】" "停止运行命令：sh /etc/storage/ssget.sh stop"
+	logger -t "【全自动SS获取脚本】" "卸载命令：sh /etc/storage/ssget.sh del"
  	logger -t "【全自动SS获取脚本】" "启动脚本（无人值守版）！"
  	sh /etc/storage/ssget.sh &
 	rm -f /tmp/ssget*

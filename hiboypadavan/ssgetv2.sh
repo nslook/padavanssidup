@@ -15,11 +15,19 @@ if [ "1$abcj" = "1install" ]; then
 	cp /tmp/ssget.sh /etc/storage/ssget.sh
 	#wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/hiboypadavan/ssget.sh -O /etc/storage/ssget.sh
 	logger -t "【全自动SS获取脚本】" "全自动免费SS获取脚本（无人值守版）安装成功！"
+	logger -t "【全自动SS获取脚本】" "运行命令：sh /etc/storage/ssget.sh"
+	logger -t "【全自动SS获取脚本】" "无人值守模式运行命令：sh /etc/storage/ssget.sh auto &"
 	logger -t "【全自动SS获取脚本】" "停止运行命令：sh /etc/storage/ssget.sh stop"
 	logger -t "【全自动SS获取脚本】" "卸载命令：sh /etc/storage/ssget.sh del"
- 	logger -t "【全自动SS获取脚本】" "启动脚本（无人值守版）！"
- 	sh /etc/storage/ssget.sh &
+	echo "全自动免费SS获取脚本（无人值守版）安装成功！"
+	echo "运行命令：sh /etc/storage/ssget.sh"
+	echo "无人值守模式运行命令：sh /etc/storage/ssget.sh auto &"
+	echo "停止运行命令：sh /etc/storage/ssget.sh stop"
+	echo "卸载命令：sh /etc/storage/ssget.sh del"
+ 	#logger -t "【全自动SS获取脚本】" "启动脚本（无人值守版）！"
+ 	#sh /etc/storage/ssget.sh &
 	rm -f /tmp/ssget*
+	#mtd_storage.sh save
 	exit
 fi
 
@@ -184,8 +192,86 @@ done
 abc_start
 }
 
+abc_go()
+{
+if [ "1$abcj" = "1auto" ]; then
+	logger -t "【全自动SS获取脚本】" "脚本状态：开启（自守护模式）"
+	abc_start
+	else
+	logger -t "【全自动SS获取脚本】" "脚本状态：开始获取免费SS服务器、端口、密码"
+	abc_oneget
+fi
+}
+
+abc_oneget()
+{
+abca=0
+abcb=1
+rm -f /tmp/abci*
+abcd=`echo "$abcc" | base64 -d`
+wget --no-check-certificate -q $abcd -O /tmp/abci
+if [ ! -f /tmp/abci ]; then
+	logger -t "【全自动SS获取脚本】" "脚本状态：免费SS官网已瘫痪！！"
+	exit
+fi
+nvram set rt_ssnum_x=0
+sed -i '1,/<div class="hover-text">/d' /tmp/abci
+while true
+do
+	abce=`sed -n '1p' /tmp/abci | cut -d '>' -f 3 | cut -d '<' -f 1`
+	abcf=`sed -n '2p' /tmp/abci | cut -d '>' -f 3`
+	abcg=`sed -n '4p' /tmp/abci | cut -d '>' -f 3`
+	abch=`sed -n '6p' /tmp/abci | cut -d ':' -f 2 | cut -d '<' -f 1 | tr '[A-Z]' '[a-z]'`
+	if [ "1$abce" = "1" ]; then
+	break
+	else
+	sed -i '1,/<div class="hover-text">/d' /tmp/abci
+	fi
+	nvram set rt_ss_name_x$abca=$abcb	
+	nvram set rt_ss_server_x$abca=$abce
+	nvram set rt_ss_port_x$abca=$abcf
+	nvram set rt_ss_method_x$abca=$abch
+	nvram set rt_ss_password_x$abca=$abcg
+	nvram set rt_ss_usage_x$abca=" -O origin -o plain"
+	nvram set rt_ss_method_write_x_0$abca=
+	let abca++
+	let abcb++
+	nvram set rt_ssnum_x=$abca
+	if [ "1$abca" = "19" ]; then
+	break
+	fi
+done
+if [ "$abcj" -gt "0" ] && [ "$abcj" -lt "10" ]; then
+	abcq=abcj
+	let abcq--
+	else
+	abcq=`tr -cd 0-8 </dev/urandom | head -c 1`
+fi
+abck=`nvram get rt_ss_password_x$abcq`
+abcl=`nvram get ss_key`
+abcm=`nvram get rt_ss_server_x$abcq`
+abcn=`nvram get ss_server`
+if [ "1$abck" = "1$abcl" ] && [ "1$abcm" = "1$abcn" ]; then
+	logger -t "【全自动SS获取脚本】" "脚本状态：最新获取的服务器、密码未变更"
+	exit
+	else
+	nvram set ss_server=`nvram get rt_ss_server_x$abcq`
+	nvram set ss_server_port=`nvram get rt_ss_port_x$abcq`
+	nvram set ss_key=`nvram get rt_ss_password_x$abcq`
+	nvram set ss_method=`nvram get rt_ss_method_x$abcq`
+	#nvram commit
+	logger -t "【全自动SS获取脚本】" "脚本状态：更新获取的服务器、端口、密码！！！"
+fi
+sspower=`nvram get ss_enable`
+if [ "1$sspower" = "10" ]; then
+	logger -t "【全自动SS获取脚本】" "脚本状态：当前SS还未启动！！！"
+	exit
+else
+	/etc/storage/ez_buttons_script.sh cleanss &
+fi
+}
+
 #默认参数5
 abcp=5
-logger -t "【全自动SS获取脚本】" "脚本状态：开启（自守护模式）"
 rm -f /tmp/ssget*
-abc_start
+abc_go

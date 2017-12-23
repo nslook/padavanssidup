@@ -25,7 +25,6 @@ abcc=aHR0cHM6Ly9nbG9iYWwuaXNoYWRvd3gubmV0Lw==
 #默认参数5
 abcp=5
 rm -f /tmp/ssget*
-ss_link_1=email.163.com
 abchod=`nvram get ss_link_1`
 if [ "1$abchod" = "1email.163.com" ]; then
 	abcd=`echo "$abcc" | base64 -d`

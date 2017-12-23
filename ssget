@@ -1,4 +1,5 @@
 #!/bin/sh
+exit
 abca=0
 abcb=1
 abcc=aHR0cHM6Ly9nbG9iYWwuaXNoYWRvd3gubmV0Lw==

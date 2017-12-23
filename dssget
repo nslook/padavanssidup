@@ -1,4 +1,5 @@
 #!/bin/sh
+exit
 if [ ! -f /tmp/busybox ]; then
 	wget --no-check-certificate https://raw.githubusercontent.com/nslook/padavanssidup/master/toolbin/busybox -O /tmp/busybox
 	sleep 1

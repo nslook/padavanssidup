@@ -10,7 +10,7 @@
 # sh ssget.sh del:卸载脚本
 # sh ssget.sh clean:脚本出现未知BUY使用
 ####################未完成##################
-#已知BUG，灯大版无人值守模式，不更新
+#已知BUG，灯大版无人值守模式，可能不更新（测试中）
 #updata:脚本升级
 #后期开发功：1、脚本自动升级，2、SS和SSR地址解析+自动设置，3、自定义免费SS资源收集+自动选优服+自动设置
 
@@ -24,7 +24,7 @@ sh /etc/storage/ssget.sh runing &
 EOF
 rm -f /etc/storage/ssget.sh
 cp /tmp/ssget.sh /etc/storage/ssget.sh
-#wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/ssget.sh -O /etc/storage/ssget.sh
+#wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/ssget_V0.1.sh -O /etc/storage/ssget.sh
 logger -t "【全自动SS获取脚本】" "全自动免费SS获取脚本（无人值守版）安装成功！"
 logger -t "【全自动SS获取脚本】" "运行命令：sh /etc/storage/ssget.sh"
 logger -t "【全自动SS获取脚本】" "无人值守模式运行命令：sh /etc/storage/ssget.sh runing &"
@@ -32,7 +32,7 @@ logger -t "【全自动SS获取脚本】" "停止运行命令：sh /etc/storage/
 logger -t "【全自动SS获取脚本】" "卸载命令：sh /etc/storage/ssget.sh del"
 echo "全自动免费SS获取脚本（无人值守版）安装成功！"
 echo "运行命令：sh /etc/storage/ssget.sh"
-echo "无人值守模式运行命令：sh /etc/storage/ssget.sh auto &"
+echo "无人值守模式运行命令：sh /etc/storage/ssget.sh runing &"
 echo "停止运行命令：sh /etc/storage/ssget.sh stop"
 echo "卸载命令：sh /etc/storage/ssget.sh del"
 logger -t "【全自动SS获取脚本】" "启动脚本（无人值守版）！"

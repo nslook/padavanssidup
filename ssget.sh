@@ -21,7 +21,7 @@ sed -i '/sleep/d' /etc/storage/post_wan_script.sh
 sed -i '/ssget/d' /etc/storage/post_wan_script.sh
 cat >> /etc/storage/post_wan_script.sh << EOF
 sleep 80
-sh /etc/storage/ssget.sh run &
+sh /etc/storage/ssget.sh runing 4 &
 EOF
 rm -f /etc/storage/ssget.sh
 cp /tmp/ssget.sh /etc/storage/ssget.sh
@@ -37,7 +37,7 @@ echo "无人值守模式运行命令：sh /etc/storage/ssget.sh runing &"
 echo "停止运行命令：sh /etc/storage/ssget.sh stop"
 echo "卸载命令：sh /etc/storage/ssget.sh del"
 logger -t "【全自动SS获取脚本】" "启动脚本（无人值守版）！"
-sh /etc/storage/ssget.sh run &
+sh /etc/storage/ssget.sh runing 4 &
 rm -f /tmp/ssget*
 #mtd_storage.sh save
 exit

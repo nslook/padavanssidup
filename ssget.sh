@@ -25,7 +25,7 @@ sh /etc/storage/ssget.sh run &
 EOF
 rm -f /etc/storage/ssget.sh
 cp /tmp/ssget.sh /etc/storage/ssget.sh
-#wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/ssget_V0.1.sh -O /etc/storage/ssget.sh
+#wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/ssget.sh -O /etc/storage/ssget.sh
 logger -t "【全自动SS获取脚本】" "全自动免费SS获取脚本（无人值守版）安装成功！"
 logger -t "【全自动SS获取脚本】" "运行命令：sh /etc/storage/ssget.sh"
 logger -t "【全自动SS获取脚本】" "无人值守模式运行命令：sh /etc/storage/ssget.sh runing &"
@@ -95,10 +95,7 @@ do
 	if [ "1$abc_get_x" = "11" ]; then
 		abc_set
 	fi
-	
-	if [ "1$abc_set_x" = "11" ]; then
-		abc_restart
-	fi
+	abc_restart
 	abc_keep
 done
 }
@@ -283,7 +280,7 @@ fi
 abc_restarh()
 {
 sspower=`nvram get ss_enable`
-if [ "1$sspower" = "11" ]; then
+if [ "1$sspower" = "11" ] && [ "1$abc_set_x" = "11" ]; then
 	/etc/storage/ez_buttons_script.sh cleanss &
 	sleep 60
 else
@@ -295,7 +292,7 @@ fi
 abc_restard()
 {
 sspower=`nvram get shadowsocks_enable`
-if [ "1$sspower" = "11" ]; then
+if [ "1$sspower" = "11" ] && [ "1$abc_set_x" = "11" ]; then
 	restart_ss
 	sleep 30
 else
@@ -373,8 +370,8 @@ do
 done
 }
 
+#########以下开发中##########
 
-########以下开发中####
 abc_ss_ssr_add()
 {
 abc_ss_ssr_add_x=0
@@ -488,6 +485,15 @@ if [ "1$abcr" = "1d" ]; then
 	logger -t "【全自动SS获取脚本】" "脚本状态：更新获取的服务器、端口、密码！！！"
 	abc_set_x=1
 fi
+
+
+
+
+
+
+
+
+
 
 
 

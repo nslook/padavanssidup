@@ -284,7 +284,7 @@ if [ "1$sspower" = "11" ] && [ "1$abc_set_x" = "11" ]; then
 	/etc/storage/ez_buttons_script.sh cleanss &
 	sleep 60
 else
-	logger -t "【全自动SS获取脚本】" "脚本状态：当前系统SS还未启动！！！"
+	logger -t "【全自动SS获取脚本】" "脚本状态：SS无需重启！！！！！！"
 	abc_keeph
 fi
 }
@@ -296,7 +296,7 @@ if [ "1$sspower" = "11" ] && [ "1$abc_set_x" = "11" ]; then
 	restart_ss
 	sleep 30
 else
-	logger -t "【全自动SS获取脚本】" "脚本状态：当前系统SS还未启动！！！"
+	logger -t "【全自动SS获取脚本】" "脚本状态：SS无需重启！！！！！！"
 	abc_keepd
 fi
 }

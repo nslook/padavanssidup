@@ -1,6 +1,6 @@
 #!/bin/sh
 #此脚本兼容H大、灯大padavan固件
-#wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/ssget.sh -O /etc/storage/ssget.sh；sh /etc/storage/ssget.sh install
+#wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/ssget.sh -O /tmp/ssget.sh;sh /tmp/ssget.sh install
 ####################已完成##################
 #以下为脚本运行方式
 # sh ssget.sh:只更新节点列表

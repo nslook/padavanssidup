@@ -1,5 +1,5 @@
 #!/bin/sh
-#此脚本兼容H大、灯大padavan固件
+#此脚本为H大、灯大padavan固件专用
 #wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/ssget.sh -O /tmp/ssget.sh;sh /tmp/ssget.sh install
 ####################已完成##################
 #以下为脚本运行方式

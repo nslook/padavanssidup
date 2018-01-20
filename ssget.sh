@@ -115,9 +115,10 @@ abc_init()
 abcsssspower=`nvram get abcss_enable`
 if [ "1$abcsssspower" = "11" ] && [ -f /tmp/abci ]; then
 	logger -t "【全自动SS获取脚本】" "脚本状态：脚本已运行中，无需重复开启"
-	rm -f /tmp/abci*
+	#rm -f /tmp/abci*
 	exit
 fi
+exit
 nvram set abcss_enable=1
 wget --no-check-certificate -q https://www.baidu.com -O /tmp/abci
 abcc=aHR0cHM6Ly9nbG9iYWwuaXNoYWRvd3gubmV0Lw==

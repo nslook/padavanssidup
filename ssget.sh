@@ -118,7 +118,7 @@ if [ "1$abcsssspower" = "11" ] && [ -f /tmp/abci ]; then
 	#rm -f /tmp/abci*
 	exit
 fi
-exit
+#exit
 nvram set abcss_enable=1
 wget --no-check-certificate -q https://www.baidu.com -O /tmp/abci
 abcc=aHR0cHM6Ly9nbG9iYWwuaXNoYWRvd3gubmV0Lw==
@@ -217,7 +217,7 @@ abcq=$abct
 if [ "$abcq" -gt "0" ] && [ "$abcq" -lt "10" ]; then
 	let abcq--
 else
-	abcq=`tr -cd 0-8 </dev/urandom | head -c 1`
+	abcq=`tr -cd 0-2 </dev/urandom | head -c 1`
 fi
 if [ "1$abcr" = "1h" ]; then
 	abc_seth

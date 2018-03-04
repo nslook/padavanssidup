@@ -26,19 +26,22 @@ EOF
 rm -f /etc/storage/ssget.sh
 cp /tmp/ssget.sh /etc/storage/ssget.sh
 #wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/ssget.sh -O /etc/storage/ssget.sh
-logger -t "【全自动SS获取脚本】" "全自动免费SS获取脚本（无人值守版）安装成功！"
-logger -t "【全自动SS获取脚本】" "运行命令：sh /etc/storage/ssget.sh"
-logger -t "【全自动SS获取脚本】" "无人值守模式运行命令：sh /etc/storage/ssget.sh runing &"
+logger -t "【全自动SS获取脚本】" "全自动免费SS获取脚本（无人值守版）安装成功！！【默认不自动运行】"
+logger -t "【全自动SS获取脚本】" "更新SS节点命令：sh /etc/storage/ssget.sh"
+logger -t "【全自动SS获取脚本】" "半自动模式运行命令：sh /etc/storage/ssget.sh run"
+logger -t "【全自动SS获取脚本】" "全自动模式运行命令：sh /etc/storage/ssget.sh runing &"
 logger -t "【全自动SS获取脚本】" "停止运行命令：sh /etc/storage/ssget.sh stop"
 logger -t "【全自动SS获取脚本】" "卸载命令：sh /etc/storage/ssget.sh del"
-echo "全自动免费SS获取脚本（无人值守版）安装成功！"
-echo "运行命令：sh /etc/storage/ssget.sh"
-echo "无人值守模式运行命令：sh /etc/storage/ssget.sh runing &"
+echo "全自动免费SS获取脚本（无人值守版）安装成功！！【默认不自动运行】"
+echo "更新SS节点命令：sh /etc/storage/ssget.sh"
+echo "半自动模式运行命令：sh /etc/storage/ssget.sh run"
+echo "全自动模式运行命令：sh /etc/storage/ssget.sh runing &"
 echo "停止运行命令：sh /etc/storage/ssget.sh stop"
 echo "卸载命令：sh /etc/storage/ssget.sh del"
-logger -t "【全自动SS获取脚本】" "启动脚本（无人值守版）！"
-sh /etc/storage/ssget.sh runing &
+#logger -t "【全自动SS获取脚本】" "启动脚本（无人值守版）全自动模式！"
+#sh /etc/storage/ssget.sh runing &
 rm -f /tmp/ssget*
+#注释以下mtd_storage.sh save 前面的 # ，开启断电保存。
 #mtd_storage.sh save
 exit
 }
@@ -51,7 +54,8 @@ sed -i '/ssget/d' /etc/storage/post_wan_script.sh
 rm -f /etc/storage/ssget.sh
 rm -f /tmp/ssget*
 #nvram set rt_ssnum_x=0
-logger -t "【全自动SS获取脚本】" "全自动免费SS获取脚本（无人值守版）已卸载！5分钟中内关闭后台运行脚本"
+logger -t "【全自动SS获取脚本】" "全自动免费SS获取脚本（无人值守版）已卸载！"
+abc_stop
 exit
 
 }
@@ -213,6 +217,23 @@ do
 done
 }
 
+abc_set()
+{
+abcq=$abct
+if [ "$abcq" -gt "0" ] && [ "$abcq" -lt "10" ]; then
+	let abcq--
+else
+	abcq=`tr -cd 0-2 </dev/urandom | head -c 1`
+fi
+abc_ping
+if [ "1$abcr" = "1h" ]; then
+	abc_seth
+fi
+if [ "1$abcr" = "1d" ]; then
+	abc_setd
+fi
+}
+
 abc_ping()
 {
 ping_server=`nvram get rt_ss_server_x$abcq`
@@ -222,25 +243,8 @@ if [ "1$abcu" = "11" ]; then
 	logger -t "【全自动SS获取脚本】" "PING：服务器：$ping_server 正常"
 else
 	logger -t "【全自动SS获取脚本】" "PING：服务器：$ping_server 无响应，尝试切换服务器"
-	abcq=`tr -cd 0-8 </dev/urandom | head -c 1`
+	abcq=`tr -cd 0-2 </dev/urandom | head -c 1`
 	abc_ping
-fi
-}
-
-abc_set()
-{
-abcq=$abct
-if [ "$abcq" -gt "0" ] && [ "$abcq" -lt "10" ]; then
-	let abcq--
-else
-	abcq=`tr -cd 0-8 </dev/urandom | head -c 1`
-fi
-abc_ping
-if [ "1$abcr" = "1h" ]; then
-	abc_seth
-fi
-if [ "1$abcr" = "1d" ]; then
-	abc_setd
 fi
 }
 

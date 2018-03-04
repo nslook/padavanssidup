@@ -7,7 +7,10 @@
 答：懒懒懒！！！没精力去搞。（PS：脚本架构有点乱，自己看这堆代码都烦）
 
 问：怎么安装使用？
-答：运行命令: wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/ssget.sh -O /etc/storage/ssget.sh  install
+答：安装命令（里面有介绍）: 
+```Bash
+wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/ssget.sh -O /etc/storage/ssget.sh install
+```
 
 2018-2-10 
 暂时复活！

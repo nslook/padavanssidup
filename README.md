@@ -9,7 +9,7 @@
 问：怎么安装使用？
 答：安装命令（里面有介绍）: 
 ```Bash
-wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/ssget.sh -O /etc/storage/ssget.sh install
+wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/ssget.sh -O /tmp/ssget.sh;sh /tmp/ssget.sh install
 ```
 
 2018-2-10 

@@ -14,6 +14,7 @@ wget --no-check-certificate -q -O /tmp/123321/conf/ip.conf https://raw.githubuse
 wget --no-check-certificate -q -O /tmp/123321/conf/union.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
 wget --no-check-certificate -q -O /tmp/123321/hosts https://raw.githubusercontent.com/vokins/yhosts/master/hosts
 wget --no-check-certificate -q -O /tmp/123321/whitelist https://raw.githubusercontent.com/nslook/padavanssidup/master/adfq/whitelist
+cat /tmp/123321/whitelist | while read line ;do sed -i "/$line/d" /tmp/123321/conf/union.conf;done
 cat /tmp/123321/conf/union.conf | sed "/#/d" | sed "s/address\=\/.//g" | sed "s/\/0.0.0.0//g" | sed "/^$/d" > /tmp/123321/domain
 cat /tmp/123321/whitelist >> /tmp/123321/domain;sed -i "/^$/d" /tmp/123321/domain
 cat /tmp/123321/domain | while read line ;do sed -i "/$line/d" /tmp/123321/hosts;done

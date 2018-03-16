@@ -18,6 +18,7 @@ cat /tmp/123321/conf/union.conf | sed "/#/d" | sed "s/address\=\/.//g" | sed "s/
 cat /tmp/123321/whitelist >> /tmp/123321/domain;sed -i "/^$/d" /tmp/123321/domain
 cat /tmp/123321/domain | while read line ;do sed -i "/$line/d" /tmp/123321/hosts;done
 sed -i "/#/d" /tmp/123321/hosts
+sed -i "s/0.0.0.0/127.0.0.1/g" /tmp/123321/hosts
 sed -i "/^$/d" /tmp/123321/hosts
 sed -i "s/0.0.0.0/127.0.0.1/g" /tmp/123321/conf/union.conf
 /etc/init.d/dnsmasq restart > /dev/null 2>&1

@@ -11,11 +11,11 @@ if [ ! -f /tmp/koolproxy/koolproxy ]; then
 	rm -rf /tmp/koolproxy
 	mkdir -p /tmp/koolproxy/data
 	#下载二进制
-	wget --no-check-certificate -q -O /tmp/koolproxy/koolproxy https://koolproxy.com/downloads/mipsel
+	wget --no-check-certificate -q -O /tmp/koolproxy/koolproxy https://raw.githubusercontent.com/nslook/padavanssidup/master/toolbin/koolproxy
 	chmod +x /tmp/koolproxy/koolproxy
 	#下载规则
-	wget --no-check-certificate -q -O /tmp/koolproxy/data/koolproxy.txt https://kprule.com/koolproxy.txt
-	wget --no-check-certificate -q -O /tmp/koolproxy/data/kp.dat https://kprule.com/kp.dat
+	#wget --no-check-certificate -q -O /tmp/koolproxy/data/koolproxy.txt https://kprule.com/koolproxy.txt
+	#wget --no-check-certificate -q -O /tmp/koolproxy/data/kp.dat https://kprule.com/kp.dat
 	#wget --no-check-certificate -q -O /tmp/koolproxy/data https://kprule.com/user.txt
 fi
 
@@ -43,6 +43,8 @@ fi
 
 start()
 {
+rm -f /tmp/koolproxy/data
+mkdir -p /tmp/koolproxy/data
 #运行koolproxy二进制文件
 /tmp/koolproxy/koolproxy -b /tmp/koolproxy/data -d
 
@@ -52,8 +54,8 @@ LOCAL_PORT=3000
 #防止重复添加规则
 iptables -t nat -C PREROUTING -j KOOLPROXY 2>/dev/null && [ $? -eq 0 ] && return 2
 #创建所需的ipset
-IPSET_ADB="adblock"
-ipset -! create $IPSET_ADB iphash && ipset -! add $IPSET_ADB 110.110.110.110
+#IPSET_ADB="adblock"
+#ipset -! create $IPSET_ADB iphash && ipset -! add $IPSET_ADB 110.110.110.110
 	
 #生成代理规则
 iptables -t nat -N KOOLPROXY
@@ -81,12 +83,12 @@ iptables -t nat -A KOOLPROXY -j KOOLPROXY_GLO
 
 stop()
 {
-####################上面开始规则都改了，随便把这里也改下，谢谢#####################
 iptables -t nat -D PREROUTING -j KOOLPROXY 2>/dev/null
 iptables -t nat -F KOOLPROXY 2>/dev/null && iptables -t nat -X KOOLPROXY 2>/dev/null
 iptables -t nat -F KOOLPROXY_GLO 2>/dev/null && iptables -t nat -X KOOLPROXY_GLO 2>/dev/null
 
 kill -9 $(ps|grep '/tmp/koolproxy/koolproxy'|grep -v 'grep'|awk '{print$1}') 2>/dev/null
+sleep 2
 }
 
 abcj=$1
@@ -95,13 +97,14 @@ case $abcj in
 
 on)
 	init
+	stop
 	start
 	;;
 off)
 	stop
 	;;
 up)
-	updata
+	#updata
 	;;
 *)
 	;;

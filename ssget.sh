@@ -1,5 +1,5 @@
 #!/bin/sh
-#此脚本兼容H大、灯大padavan固件
+#此脚本兼容H大、灯大padavan固件     2018-3-19
 #wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/ssget.sh -O /tmp/ssget.sh;sh /tmp/ssget.sh install
 ####################已完成##################
 #以下为脚本运行方式
@@ -17,10 +17,9 @@
 
 abc_install()
 {
-sed -i '/sleep/d' /etc/storage/post_wan_script.sh
+#sed -i '/sleep/d' /etc/storage/post_wan_script.sh
 sed -i '/ssget/d' /etc/storage/post_wan_script.sh
 cat >> /etc/storage/post_wan_script.sh << EOF
-sleep 80
 sh /etc/storage/ssget.sh runing &
 EOF
 rm -f /etc/storage/ssget.sh
@@ -38,10 +37,10 @@ echo "半自动模式运行命令：sh /etc/storage/ssget.sh run"
 echo "全自动模式运行命令：sh /etc/storage/ssget.sh runing &"
 echo "停止运行命令：sh /etc/storage/ssget.sh stop"
 echo "卸载命令：sh /etc/storage/ssget.sh del"
-#logger -t "【全自动SS获取脚本】" "启动脚本（无人值守版）全自动模式！"
+#logger -t "【全自动SS获取脚本】" "正在启动脚本（无人值守版）全自动模式！"
 #sh /etc/storage/ssget.sh runing &
 rm -f /tmp/ssget*
-#注释以下mtd_storage.sh save 前面的 # ，开启断电保存。
+#注释以下mtd_storage.sh save 前面的 # ，防断电导致脚本丢失。
 #mtd_storage.sh save
 exit
 }
@@ -49,7 +48,7 @@ exit
 abc_del()
 {
 nvram set abcss_run=0
-sed -i '/sleep/d' /etc/storage/post_wan_script.sh
+#sed -i '/sleep/d' /etc/storage/post_wan_script.sh
 sed -i '/ssget/d' /etc/storage/post_wan_script.sh
 rm -f /etc/storage/ssget.sh
 rm -f /tmp/ssget*
@@ -395,7 +394,7 @@ do
 done
 }
 
-#########以下开发中##########
+#############################################以下脚本开发中#############################################
 
 abc_ss_ssr_add()
 {
@@ -561,15 +560,7 @@ if [ "1$abck" = "1$abcl" ] && [ "1$abcm" = "1$abcn" ]; then
 fi
 }
 
-
-
-
-
-abc_sub () {
-
-return
-
-}
+#############################################以上脚本开发中#############################################
 
 abcj=$1
 abct=$2
@@ -595,13 +586,13 @@ runing)
 	abc_runing
 	;;
 run)
-	nvram set abcss_run=0
+	#nvram set abcss_run=0
 	logger -t "【全自动SS获取脚本】" "更新节点列表+自动设置（半自动）"
 	abc_init
 	abc_run
 	;;
 *)
-	nvram set abcss_run=0
+	#nvram set abcss_run=0
 	logger -t "【全自动SS获取脚本】" "更新节点列表"
 	abc_init
 	abc_get

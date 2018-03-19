@@ -1,5 +1,7 @@
 #!/bin/sh
-#此脚本兼容H大、灯大padavan固件     2018-3-19
+#2018-3-19
+#此脚本兼容H大、灯大padavan固件（只支持SS，不支持SSR）
+#安装脚本命令（不建议在控制台运行）：
 #wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/ssget.sh -O /tmp/ssget.sh;sh /tmp/ssget.sh install
 ####################已完成##################
 #以下为脚本运行方式
@@ -11,8 +13,9 @@
 # sh ssget.sh del:卸载脚本
 # sh ssget.sh clean:脚本出现未知BUY使用
 ####################未完成##################
-#已知BUG，灯大版无人值守模式，可能不更新（测试中）
-#updata:脚本升级
+#已知BUG，灯大版无人值守模式（sh ssget.sh runing），可能不更新（测试中）
+#updata:自动脚本升级
+# sh ssget.sh ss://xxxxx: 对ss://或ssr://直译设置功能
 #后期开发功：1、脚本自动升级，2、SS和SSR地址解析+自动设置，3、自定义免费SS资源收集+自动选优服+自动设置
 
 abc_install()
@@ -578,19 +581,18 @@ clean)
 	abc_clean
 	;;
 runing)
-	logger -t "【全自动SS获取脚本】" "更新节点列表+自动设置（全自动模式）"
+	logger -t "【全自动SS获取脚本】" "更新节点列表+自动设置（7*24小时蹲守更新）"
 	abc_init
 	nvram set abcss_run=1
 	abc_runing
 	;;
 run)
 	#nvram set abcss_run=0
-	logger -t "【全自动SS获取脚本】" "更新节点列表+自动设置（半自动）"
+	logger -t "【全自动SS获取脚本】" "更新节点列表+自动设置"
 	abc_init
 	abc_run
 	;;
 *)
-	#nvram set abcss_run=0
 	logger -t "【全自动SS获取脚本】" "更新节点列表"
 	abc_init
 	abc_get

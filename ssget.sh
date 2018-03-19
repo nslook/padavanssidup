@@ -102,7 +102,9 @@ do
 	if [ "1$abc_get_x" = "11" ]; then
 		abc_set
 	fi
-	abc_restart
+	if [ "1$abc_set_x" = "11" ]; then
+		abc_restart
+	fi
 	abc_keep
 done
 }
@@ -255,7 +257,7 @@ abcl=`nvram get ss_key`
 abcm=`nvram get rt_ss_server_x$abcq`
 abcn=`nvram get ss_server`
 if [ "1$abck" = "1$abcl" ] && [ "1$abcm" = "1$abcn" ]; then
-	logger -t "【全自动SS获取脚本】" "脚本状态：最新获取的服务器、密码未变更"
+	logger -t "【全自动SS获取脚本】" "脚本状态：SS服务器、密码未变更"
 	#abc_keep
 	return
 else
@@ -264,7 +266,7 @@ else
 	nvram set ss_key=`nvram get rt_ss_password_x$abcq`
 	nvram set ss_method=`nvram get rt_ss_method_x$abcq`
 	#nvram commit
-	logger -t "【全自动SS获取脚本】" "脚本状态：更新获取的服务器、端口、密码！！！"
+	logger -t "【全自动SS获取脚本】" "脚本状态：正常更新SS服务器、端口、密码！！！"
 	abc_set_x=1
 fi
 }
@@ -276,7 +278,7 @@ abcl=`nvram get dssgets_key`
 abcm=`nvram get ss_node_server_addr_x$abcq`
 abcn=`nvram get dssgets_server`
 if [ "1$abck" = "1$abcl" ] && [ "1$abcm" = "1$abcn" ]; then
-	logger -t "【全自动SS获取脚本】" "脚本状态：最新获取的服务器、密码未变更"
+	logger -t "【全自动SS获取脚本】" "脚本状态：SS服务器、密码未变更"
 	#abc_keep
 	return
 	else
@@ -284,7 +286,7 @@ if [ "1$abck" = "1$abcl" ] && [ "1$abcm" = "1$abcn" ]; then
 	nvram set dssgets_server=`nvram get ss_node_server_addr_x$abcq`
 	nvram set dssgets_key=`nvram get ss_node_password_x$abcq`
 	#nvram commit
-	logger -t "【全自动SS获取脚本】" "脚本状态：更新获取的服务器、端口、密码！！！"
+	logger -t "【全自动SS获取脚本】" "脚本状态：正常更新SS服务器、端口、密码！！！"
 	abc_set_x=1
 fi
 }
@@ -307,7 +309,7 @@ if [ "1$sspower" = "11" ] && [ "1$abc_set_x" = "11" ]; then
 	#/etc/storage/ez_buttons_script.sh cleanss &
 	sleep 10
 else
-	logger -t "【全自动SS获取脚本】" "脚本状态：SS无需重启！！！！！！"
+	logger -t "【全自动SS获取脚本】" "脚本状态：当前SS未启动！！！！！！"
 	abc_keeph
 fi
 }
@@ -317,9 +319,9 @@ abc_restard()
 sspower=`nvram get shadowsocks_enable`
 if [ "1$sspower" = "11" ] && [ "1$abc_set_x" = "11" ]; then
 	restart_ss
-	sleep 30
+	sleep 20
 else
-	logger -t "【全自动SS获取脚本】" "脚本状态：SS无需重启！！！！！！"
+	logger -t "【全自动SS获取脚本】" "脚本状态：当前SS未启动！！！！！！"
 	abc_keepd
 fi
 }
@@ -329,7 +331,7 @@ abc_keeph()
 while true
 do
 	abc_runyn
-	sleep 30
+	sleep 10
 	sspower=`nvram get ss_enable`
 	if [ "1$sspower" = "11" ]; then
 		break
@@ -346,7 +348,7 @@ abc_keepd()
 while true
 do
 	abc_runyn
-	sleep 30
+	sleep 10
 	sspower=`nvram get shadowsocks_enable`
 	if [ "1$sspower" = "11" ]; then
 		break
@@ -384,7 +386,7 @@ do
 	if [ "$abcdd" == "1" ] && [ "$abcgg" == "1" ]; then
 		#logger -t "【全自动SS获取脚本】" "网络全球通"
 		abco=0
-		sleep 180
+		sleep 100
 	fi
 	if [ "$abco" == "$abcp" ]; then
 		abco=0

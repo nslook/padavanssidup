@@ -127,17 +127,17 @@ if [ "1$abcsssspower" = "11" ] && [ -f /tmp/abci ]; then
 fi
 nvram set abcss_enable=1
 wget --no-check-certificate -q https://www.baidu.com -O /tmp/abci
-abcc=aHR0cHM6Ly9nbG9iYWwuaXNoYWRvd3gubmV0Lw==
+abcc=aHR0cHM6Ly9lbi5pc2hhZG93eC5uZXQv
 #默认参数5
 abcp=3
 rm -f /tmp/ssget*
 abchod=`nvram get ss_link_1`
-if [ "1$abchod" = "1email.163.com" ]; then
-	abcd=`echo "$abcc" | base64 -d`
-	abcr=h
-	else
+if [ "1$abchod" = "1" ]; then
 	abc_initd
 	abcr=d
+	else
+	abcd=`echo "$abcc" | base64 -d`
+	abcr=h
 fi
 }
 

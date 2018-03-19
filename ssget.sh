@@ -17,7 +17,6 @@
 
 abc_install()
 {
-#sed -i '/sleep/d' /etc/storage/post_wan_script.sh
 sed -i '/ssget/d' /etc/storage/post_wan_script.sh
 cat >> /etc/storage/post_wan_script.sh << EOF
 sh /etc/storage/ssget.sh runing &
@@ -48,7 +47,6 @@ exit
 abc_del()
 {
 nvram set abcss_run=0
-#sed -i '/sleep/d' /etc/storage/post_wan_script.sh
 sed -i '/ssget/d' /etc/storage/post_wan_script.sh
 rm -f /etc/storage/ssget.sh
 rm -f /tmp/ssget*
@@ -127,7 +125,7 @@ if [ "1$abcsssspower" = "11" ] && [ -f /tmp/abci ]; then
 	exit
 fi
 nvram set abcss_enable=1
-wget --no-check-certificate -q https://www.baidu.com -O /tmp/abci
+echo "1" > /tmp/abci
 abcc=aHR0cHM6Ly9lbi5pc2hhZG93eC5uZXQv
 #默认参数5
 abcp=3
@@ -168,7 +166,7 @@ rm -f /tmp/abci*
 #abcd=`echo "$abcc" | base64 -d`
 wget --no-check-certificate -q $abcd -O /tmp/abci
 if [ ! -f /tmp/abci ]; then
-	wget --no-check-certificate -q https://www.baidu.com -O /tmp/abci
+	echo "1" > /tmp/abci
 	#sleep 60
 	return
 	else

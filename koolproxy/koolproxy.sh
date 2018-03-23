@@ -1,7 +1,7 @@
 #!/bin/sh
 #制作该脚本初衷，由于openwrt的luci是定制的，koolproxy官方luci不兼容，
 #简单粗暴运行koolproxy全局代理（内存运行模式，不伤闪存）（mipsel版）
-
+#运行命令：wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/koolproxy/koolproxy.sh -O /tmp/koolproxy.sh;sh /tmp/koolproxy.sh on
 # 调试脚本(没问题可进行注释)
 #set -x
 
@@ -43,6 +43,8 @@ fi
 
 kp_run()
 {
+#koolproxy -p 监听端口 -l (0:调试,1:信息,2:AD,3:警告,4:错误) -c 线程数 -b 规则路径 -d 守护模式 -v 显示版本 -h 显示帮助 
+#扩展功能koolproxy --cert 生成证书 --ipv6 IPV6支持 --video | -e 只加载视频规则   --mark   --ttl
 /tmp/koolproxy/koolproxy -d
 }
 

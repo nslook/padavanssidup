@@ -5,7 +5,7 @@
 # 调试脚本(没问题可进行注释)
 #set -x
 
-init()
+kp_init()
 {
 if [ ! -f /tmp/koolproxy/koolproxy ]; then  
 	rm -rf /tmp/koolproxy
@@ -14,9 +14,9 @@ if [ ! -f /tmp/koolproxy/koolproxy ]; then
 	wget --no-check-certificate -q -O /tmp/koolproxy/koolproxy https://raw.githubusercontent.com/nslook/padavanssidup/master/toolbin/koolproxy
 	chmod +x /tmp/koolproxy/koolproxy
 	#下载规则
-	#wget --no-check-certificate -q -O /tmp/koolproxy/data/koolproxy.txt https://kprule.com/koolproxy.txt
-	#wget --no-check-certificate -q -O /tmp/koolproxy/data/kp.dat https://kprule.com/kp.dat
-	#wget --no-check-certificate -q -O /tmp/koolproxy/data https://kprule.com/user.txt
+	#wget --no-check-certificate -q -O /tmp/koolproxy/data/rules/koolproxy.txt https://kprule.com/koolproxy.txt
+	#wget --no-check-certificate -q -O /tmp/koolproxy/data/rules/kp.dat https://kprule.com/kp.dat
+	#wget --no-check-certificate -q -O /tmp/koolproxy/data/user.txt https://kprule.com/user.txt
 fi
 
 if [ ! -f /tmp/koolproxy/koolproxy ]; then 
@@ -25,45 +25,43 @@ if [ ! -f /tmp/koolproxy/koolproxy ]; then
 fi
 }
 
-updata()
+kp_updata()
 {
-if [ -f /tmp/koolproxy/koolproxy ]; then  
-	#更新规则
-	wget --no-check-certificate -q -O /tmp/koolproxy/data/koolproxy.txt https://kprule.com/koolproxy.txt
-	wget --no-check-certificate -q -O /tmp/koolproxy/data/kp.dat https://kprule.com/kp.dat
-	#wget --no-check-certificate -q -O /tmp/koolproxy/data https://kprule.com/user.txt
+[ ! -n "$(ps|grep '/tmp/koolproxy/koolproxy'|grep -v 'grep')" ] && exit
+if [ -f /tmp/koolproxy/data ]; then  
 	kill -9 $(ps|grep '/tmp/koolproxy/koolproxy'|grep -v 'grep'|awk '{print$1}') 2>/dev/null
-	sleep 1
-	/tmp/koolproxy/koolproxy -b /tmp/koolproxy/data -d
+	#更新规则
+	wget --no-check-certificate -q -O /tmp/koolproxy/data/rules/koolproxy.txt https://kprule.com/koolproxy.txt
+	wget --no-check-certificate -q -O /tmp/koolproxy/data/rules/kp.dat https://kprule.com/kp.dat
+	#wget --no-check-certificate -q -O /tmp/koolproxy/data/user.txt https://kprule.com/user.txt
+	#运行koolproxy二进制文件
+	kp_run
 else
 	exit
 fi
 }
 
-
-start()
+kp_run()
 {
-rm -f /tmp/koolproxy/data
+/tmp/koolproxy/koolproxy -d
+}
+
+kp_start()
+{
+[ -n "$(ps|grep '/tmp/koolproxy/koolproxy'|grep -v 'grep')" ] && exit
+rm -rf /tmp/koolproxy/data
 mkdir -p /tmp/koolproxy/data
 #运行koolproxy二进制文件
-/tmp/koolproxy/koolproxy -b /tmp/koolproxy/data -d
-
+kp_run
 ####################已下规则怎么设置，求大神修改，谢谢######################
 LOCAL_PORT=3000
-
 #防止重复添加规则
 iptables -t nat -C PREROUTING -j KOOLPROXY 2>/dev/null && [ $? -eq 0 ] && return 2
 #创建所需的ipset
 #IPSET_ADB="adblock"
 #ipset -! create $IPSET_ADB iphash && ipset -! add $IPSET_ADB 110.110.110.110
-	
 #生成代理规则
 iptables -t nat -N KOOLPROXY
-#获取默认规则行号
-BL_INDEX=`iptables -t nat -L PREROUTING|tail -n +3|sed -n -e '/^BLACKLIST/='`
-[ -n "$BL_INDEX" ] && let RULE_INDEX=$BL_INDEX+1
-#确保添加到默认规则之前
-iptables -t nat -I PREROUTING $RULE_INDEX -j KOOLPROXY
 #  忽略特殊IP段
 iptables -t nat -A KOOLPROXY -d 0.0.0.0/8 -j RETURN
 iptables -t nat -A KOOLPROXY -d 10.0.0.0/8 -j RETURN
@@ -73,6 +71,13 @@ iptables -t nat -A KOOLPROXY -d 172.16.0.0/12 -j RETURN
 iptables -t nat -A KOOLPROXY -d 192.168.0.0/16 -j RETURN
 iptables -t nat -A KOOLPROXY -d 224.0.0.0/4 -j RETURN
 iptables -t nat -A KOOLPROXY -d 240.0.0.0/4 -j RETURN
+#获取默认规则行号
+#BL_INDEX=`iptables -t nat -L PREROUTING|tail -n +3|sed -n -e '/^BLACKLIST/='`
+#[ -n "$BL_INDEX" ] && let RULE_INDEX=$BL_INDEX+1
+#确保添加到默认规则之前
+#iptables -t nat -I PREROUTING $RULE_INDEX -j KOOLPROXY
+iptables -t nat -I PREROUTING -j KOOLPROXY
+
 #  生成对应CHAIN
 iptables -t nat -N KOOLPROXY_GLO
 iptables -t nat -A KOOLPROXY_GLO -p tcp --dport 80 -j REDIRECT --to $LOCAL_PORT
@@ -81,14 +86,14 @@ iptables -t nat -A KOOLPROXY -j KOOLPROXY_GLO
 ####################已上规则怎么设置，求大神修改，谢谢######################
 }
 
-stop()
+kp_stop()
 {
 iptables -t nat -D PREROUTING -j KOOLPROXY 2>/dev/null
 iptables -t nat -F KOOLPROXY 2>/dev/null && iptables -t nat -X KOOLPROXY 2>/dev/null
 iptables -t nat -F KOOLPROXY_GLO 2>/dev/null && iptables -t nat -X KOOLPROXY_GLO 2>/dev/null
 
 kill -9 $(ps|grep '/tmp/koolproxy/koolproxy'|grep -v 'grep'|awk '{print$1}') 2>/dev/null
-sleep 2
+
 }
 
 abcj=$1
@@ -96,16 +101,21 @@ abcj=`echo $abcj | tr '[A-Z]' '[a-z]'`
 case $abcj in
 
 on)
-	init
-	stop
-	start
+	kp_init
+	#kp_stop
+	kp_start
 	;;
 off)
-	stop
+	kp_stop
 	;;
 up)
-	#updata
+	kp_updata
+	;;
+del)
+	kp_stop
+	rm -rf /tmp/koolproxy
 	;;
 *)
+	echo "on off up del"
 	;;
 esac

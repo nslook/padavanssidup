@@ -9,14 +9,20 @@ kp_init()
 {
 if [ ! -f /tmp/koolproxy/koolproxy ]; then  
 	rm -rf /tmp/koolproxy
-	mkdir -p /tmp/koolproxy/data
+	mkdir -p /tmp/koolproxy/data/rules
 	#下载二进制
 	wget --no-check-certificate -q -O /tmp/koolproxy/koolproxy https://raw.githubusercontent.com/nslook/padavanssidup/master/toolbin/koolproxy
 	chmod +x /tmp/koolproxy/koolproxy
 	#下载规则
-	#wget --no-check-certificate -q -O /tmp/koolproxy/data/rules/koolproxy.txt https://kprule.com/koolproxy.txt
-	#wget --no-check-certificate -q -O /tmp/koolproxy/data/rules/kp.dat https://kprule.com/kp.dat
+	wget --no-check-certificate -q -O /tmp/koolproxy/data/rules/koolproxy.txt https://kprule.com/koolproxy.txt
+	wget --no-check-certificate -q -O /tmp/koolproxy/data/rules/kp.dat https://kprule.com/kp.dat
 	#wget --no-check-certificate -q -O /tmp/koolproxy/data/user.txt https://kprule.com/user.txt
+fi
+
+if [ ! -f /tmp/koolproxy/koolproxy ]; then 
+	#官方下载二进制程序
+	wget --no-check-certificate -q -O /tmp/koolproxy/koolproxy  https://koolproxy.com/downloads/mipsel
+	chmod +x /tmp/koolproxy/koolproxy
 fi
 
 if [ ! -f /tmp/koolproxy/koolproxy ]; then 

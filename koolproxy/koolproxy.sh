@@ -51,8 +51,8 @@ kp_run()
 kp_start()
 {
 [ -n "$(ps|grep '/tmp/koolproxy/koolproxy'|grep -v 'grep')" ] && exit
-rm -rf /tmp/koolproxy/data
-mkdir -p /tmp/koolproxy/data
+#rm -rf /tmp/koolproxy/data
+#mkdir -p /tmp/koolproxy/data
 #运行koolproxy二进制文件
 kp_run
 ####################已下规则怎么设置，求大神修改，谢谢######################
@@ -95,7 +95,7 @@ iptables -t nat -F KOOLPROXY 2>/dev/null && iptables -t nat -X KOOLPROXY 2>/dev/
 iptables -t nat -F KOOLPROXY_GLO 2>/dev/null && iptables -t nat -X KOOLPROXY_GLO 2>/dev/null
 
 kill -9 $(ps|grep '/tmp/koolproxy/koolproxy'|grep -v 'grep'|awk '{print$1}') 2>/dev/null
-
+sleep 1
 }
 
 abcj=$1
@@ -117,7 +117,13 @@ del)
 	kp_stop
 	rm -rf /tmp/koolproxy
 	;;
+upall)
+	kp_stop
+	rm -rf /tmp/koolproxy
+	kp_init
+	kp_start
+	;;
 *)
-	echo "on off up del"
+	echo "on off up upall del"
 	;;
 esac

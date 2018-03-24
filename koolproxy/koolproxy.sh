@@ -45,7 +45,7 @@ kp_run()
 {
 #koolproxy -p 监听端口 -l (0:调试,1:信息,2:AD,3:警告,4:错误) -c 线程数 -b 规则路径 -d 守护模式 -v 显示版本 -h 显示帮助 
 #扩展功能koolproxy --cert 生成证书 --ipv6 IPV6支持 --video | -e 只加载视频规则   --mark   --ttl
-/tmp/koolproxy/koolproxy -d
+/tmp/koolproxy/koolproxy
 }
 
 kp_start()
@@ -104,7 +104,7 @@ case $abcj in
 
 on)
 	kp_init
-	#kp_stop
+	kp_stop
 	kp_start
 	;;
 off)

@@ -245,7 +245,7 @@ if [ "1$abcu" = "11" ]; then
 	logger -t "【全自动SS获取脚本】" "PING：服务器：$ping_server 正常"
 else
 	logger -t "【全自动SS获取脚本】" "PING：服务器：$ping_server 无响应，尝试切换服务器"
-	abcq=`tr -cd 0-2 </dev/urandom | head -c 1`
+	abcq=`tr -cd 0-8 </dev/urandom | head -c 1`
 	abc_ping
 fi
 }

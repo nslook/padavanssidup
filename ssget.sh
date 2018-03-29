@@ -129,7 +129,7 @@ if [ "1$abcsssspower" = "11" ] && [ -f /tmp/abci ]; then
 fi
 nvram set abcss_enable=1
 echo "1" > /tmp/abci
-abcc=aHR0cHM6Ly9lbi5pc2hhZG93eC5uZXQv
+abcc="aHR0cHM6Ly9nZXQuaXNoYWRvd3gubmV0Lw=="
 #默认参数5
 abcp=3
 rm -f /tmp/ssget*

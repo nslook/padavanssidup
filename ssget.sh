@@ -238,7 +238,8 @@ fi
 
 abc_ping()
 {
-ping_server=`nvram get rt_ss_server_x$abcq`
+[ "1$abcr" == "1h" ] && ping_server=`nvram get rt_ss_server_x$abcq`
+[ "1$abcr" == "1d" ] && ping_server=`nvram get ss_node_server_addr_x$abcq`
 abcu=0
 ping -c 2 $ping_server >/dev/null;[ "$?" == "0" ] && abcu=1
 if [ "1$abcu" = "11" ]; then
@@ -384,7 +385,7 @@ do
 		sleep 30
 	fi
 	if [ "$abcdd" == "1" ] && [ "$abcgg" == "1" ]; then
-		#logger -t "【全自动SS获取脚本】" "网络全球通"
+		logger -t "【全自动SS获取脚本】" "网络全球通"
 		abco=0
 		sleep 100
 	fi

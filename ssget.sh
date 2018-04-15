@@ -182,7 +182,7 @@ do
 	abcf=`sed -n '2p' /tmp/abci | cut -d '>' -f 3`
 	abcg=`sed -n '4p' /tmp/abci | cut -d '>' -f 3`
 	abch=`sed -n '6p' /tmp/abci | cut -d ':' -f 2 | cut -d '<' -f 1 | tr '[A-Z]' '[a-z]'`
-	ping_time=`echo $(ping -4 $abce -c 1 -w 2 -q) | awk -F '/' '{print $4}'| awk -F '.' '{print $1}'`
+	abcb=`echo $(ping -4 $abce -c 1 -w 2 -q) | awk -F '/' '{print $4}'| awk -F '.' '{print $1}'`
 	if [ "1$abce" = "1" ]; then
 		break
 	else
@@ -190,7 +190,7 @@ do
 	fi
 	if [ "1$abcr" = "1h" ]; then
 		#hiboy
-		nvram set rt_ss_name_x$abca="$ping_time"ms	
+		nvram set rt_ss_name_x$abca="$abcb"ms	
 		nvram set rt_ss_server_x$abca=$abce
 		nvram set rt_ss_port_x$abca=$abcf
 		nvram set rt_ss_method_x$abca=$abch
@@ -267,7 +267,7 @@ do
 			;;
 		esac
 		
-		nvram set ss_node_name_x$abca="$ping_time"ms	
+		nvram set ss_node_name_x$abca="$abcb"ms	
 		nvram set ss_node_server_addr_x$abca=$abce
 		nvram set ss_node_server_port_x$abca=$abcf
 		nvram set ss_node_method_x$abca=$abchm

@@ -1,5 +1,7 @@
 #!/bin/sh
 #H大老毛子固件专用
+#wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/enshanssget.sh -O /tmp/ssget.sh;sh /tmp/ssget.sh d &
+
 abc_get()
 {
 #下载网页源代码

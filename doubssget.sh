@@ -145,7 +145,14 @@ abc_seth
 abc_restarh
 }
 
-
+doubhost=$(grep 'doub.io' /etc/storage/dnsmasq/hosts)
+if [ "1$doubhost" = "1" ]; then
+	echo "添加doub hosts"
+	echo "MTA0LjE2LjI0OC4xIGRvdWIuaW8=" | base64 -d >> /etc/storage/dnsmasq/hosts
+	sleep 1
+	restart_dhcpd
+	sleep 3
+fi
 abcj=$1
 abct=$2
 abcj=`echo $abcj | tr '[A-Z]' '[a-z]'`

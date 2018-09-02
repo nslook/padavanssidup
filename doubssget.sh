@@ -1,5 +1,6 @@
 #!/bin/sh
 #此脚本仅限于H大老毛子（padavan）固件
+#wget --no-check-certificate -q https://raw.githubusercontent.com/nslook/padavanssidup/master/doubssget.sh -O /tmp/ssget.sh;sh /tmp/ssget.sh d &
 abc_get()
 {
 #下载网页源代码

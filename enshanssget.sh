@@ -10,6 +10,10 @@ curl --cacert /etc/storage/cacert.pem --user-agent "Mozilla/5.0 (Macintosh; Inte
 if [ ! -f /tmp/sstmpweb ]; then
 	exit
 fi
+#筛选整理源代码
+#sed -i '1,/<tbody>/d' /tmp/sstmpweb
+#sed -i '/<\/tbody>/,$d' /tmp/sstmpweb
+
 sszy_zy=$(grep 'S-S R:\/\/' /tmp/sstmpweb | awk 'BEGIN{FS="R:\/\/|\">SS<"}{print $2}' | cut -d '<' -f 1)
 sszy_tmpkey=`expr $(echo "$sszy_zy" | awk -F '' '{print NF}') % 4`
 case "$sszy_tmpkey" in

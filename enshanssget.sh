@@ -5,8 +5,8 @@
 abc_get()
 {
 #下载网页源代码
-curl --cacert /etc/storage/cacert.pem --user-agent "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.56 Safari/535.11" -o /tmp/sstmpweb http://www.right.com.cn/forum/thread-318036-1-1.html
-#wget --no-check-certificate http://www.right.com.cn/forum/thread-318036-1-1.html -O /tmp/sstmpweb
+#curl --cacert /etc/storage/cacert.pem --user-agent "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.56 Safari/535.11" -o /tmp/sstmpweb http://www.right.com.cn/forum/thread-318036-1-1.html
+wget --no-check-certificate http://www.right.com.cn/forum/thread-318036-1-1.html -O /tmp/sstmpweb
 if [ ! -f /tmp/sstmpweb ]; then
 	exit
 fi

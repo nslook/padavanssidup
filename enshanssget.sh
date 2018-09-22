@@ -85,11 +85,11 @@ abcna=`nvram get ss_server`
 abcnb=`nvram get ss_server_port`
 abcnc=`nvram get ss_method`
 abcnd=`nvram get ss_key`
-abcne=`nvram get ssr_type_protocol`
+#abcne=`nvram get ssr_type_protocol`
 abcnf=`nvram get ssr_type_protocol_custom`
-abcng=`nvram get ssr_type_obfs`
+#abcng=`nvram get ssr_type_obfs`
 abc_set_x=0
-if [ "1$abcna" = "1$sszy_server" ] && [ "1$abcnb" = "1$sszy_server_port" ] && [ "1$abcnc" = "1$sszy_method" ] && [ "1$abcnd" = "1$sszy_key" ] && [ "1$abcne" = "1$sszy_ssr_type_protocol" ] && [ "1$abcnf" = "1$sszy_ssr_type_protocol_custom" ] && [ "1$abcng" = "1$sszy_ssr_type_obfs" ]; then
+if [ "1$abcna" = "1$sszy_server" ] && [ "1$abcnb" = "1$sszy_server_port" ] && [ "1$abcnc" = "1$sszy_method" ] && [ "1$abcnd" = "1$sszy_key" ] && [ "1$abcnf" = "1$sszy_ssr_type_protocol_custom" ]; then
 	logger -t "【aotuSS】" "脚本状态：SS服务器、密码未变更"
 	exit
 else
@@ -97,10 +97,12 @@ else
 	nvram set ss_server_port=$sszy_server_port
 	nvram set ss_method=$sszy_method
 	nvram set ss_key=$sszy_key
-	nvram set ssr_type_protocol=$sszy_ssr_type_protocol
+	#nvram set ssr_type_protocol=$sszy_ssr_type_protocol
+	nvram set ssr_type_protocol_write=$sszy_ssr_type_protocol
 	nvram set ssr_type_protocol_custom=$sszy_ssr_type_protocol_custom
-	nvram set ssr_type_obfs=$sszy_ssr_type_obfs
-	nvram set ss_usage= -O $sszy_ssr_type_protocol -o $sszy_ssr_type_obfs
+	#nvram set ssr_type_obfs=$sszy_ssr_type_obfs
+	nvram set ssr_type_obfs_write=$sszy_ssr_type_obfs
+	#nvram set ss_usage= -O $sszy_ssr_type_protocol -o $sszy_ssr_type_obfs
 	#nvram commit
 	logger -t "【aotuSS】" "脚本状态：正常更新SS服务器、端口、密码！！！"
 	abc_set_x=1

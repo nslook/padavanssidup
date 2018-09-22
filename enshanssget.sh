@@ -98,11 +98,11 @@ else
 	nvram set ss_method=$sszy_method
 	nvram set ss_key=$sszy_key
 	#nvram set ssr_type_protocol=$sszy_ssr_type_protocol
-	nvram set ssr_type_protocol_write=$sszy_ssr_type_protocol
+	#nvram set ssr_type_protocol_write=$sszy_ssr_type_protocol
 	nvram set ssr_type_protocol_custom=$sszy_ssr_type_protocol_custom
 	#nvram set ssr_type_obfs=$sszy_ssr_type_obfs
-	nvram set ssr_type_obfs_write=$sszy_ssr_type_obfs
-	#nvram set ss_usage= -O $sszy_ssr_type_protocol -o $sszy_ssr_type_obfs
+	#nvram set ssr_type_obfs_write=$sszy_ssr_type_obfs
+	nvram set ss_usage=" -O $sszy_ssr_type_protocol -o $sszy_ssr_type_obfs"
 	#nvram commit
 	logger -t "【aotuSS】" "脚本状态：正常更新SS服务器、端口、密码！！！"
 	abc_set_x=1

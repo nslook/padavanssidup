@@ -116,6 +116,12 @@ else
 fi
 }
 
+
+#SS开关：1开、0关
+nvram set ss_enable=1
+#SS模式开关：1为SSR模式、0为SS模式
+nvram set ss_type=1
+
 sspower=`nvram get ss_enable`
 if [ "1$sspower" = "11" ]; then
 	sleep 1

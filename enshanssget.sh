@@ -116,12 +116,8 @@ else
 fi
 }
 
-
-#SS开关：1开、0关
-nvram set ss_enable=1
-#SS模式开关：1为SSR模式、0为SS模式
-nvram set ss_type=1
-
+abc_sspower()
+{
 sspower=`nvram get ss_enable`
 if [ "1$sspower" = "11" ]; then
 	sleep 1
@@ -129,11 +125,17 @@ else
 	logger -t "【aotuSS】" "脚本状态：当前SS未启动！！！！！！"
 	exit
 fi
+}
 
 abcj=$1
 abcj=`echo $abcj | tr '[A-Z]' '[a-z]'`
 case $abcj in
 d)
+	#SS开关：1开、0关
+	nvram set ss_enable=1
+	#SS模式开关：1为SSR模式、0为SS模式
+	nvram set ss_type=1
+	abc_sspower
 	logger -t "【aotuSS】" "更新节点+自动设置"
 	abc_get
 	abc_set

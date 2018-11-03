@@ -14,7 +14,8 @@ fi
 #sed -i '1,/<tbody>/d' /tmp/sstmpweb
 #sed -i '/<\/tbody>/,$d' /tmp/sstmpweb
 
-sszy_zyq=$(grep 'S-S R:\/\/' /tmp/sstmpweb | awk 'BEGIN{FS="R:\/\/|\">SS<"}{print $2}' | cut -d '<' -f 1)
+#sszy_zyq=$(grep 'S-S R:\/\/' /tmp/sstmpweb | awk 'BEGIN{FS="R:\/\/|\">SS<"}{print $2}' | cut -d '<' -f 1)
+sszy_zyq=$(grep 'S-S R:\/\/' /tmp/sstmpweb | cut -d '/' -f 3 | cut -d '<' -f 1)
 sszy_zy=$(echo $sszy_zyq | cut -d '_' -f 1)
 sszy_tmpkey=`expr $(echo "$sszy_zy" | awk -F '' '{print NF}') % 4`
 case "$sszy_tmpkey" in

@@ -14,7 +14,8 @@ fi
 #sed -i '1,/<tbody>/d' /tmp/sstmpweb
 #sed -i '/<\/tbody>/,$d' /tmp/sstmpweb
 
-sszy_zy=$(grep 'S-S R:\/\/' /tmp/sstmpweb | awk 'BEGIN{FS="R:\/\/|\">SS<"}{print $2}' | cut -d '<' -f 1)
+sszy_zyq=$(grep 'S-S R:\/\/' /tmp/sstmpweb | awk 'BEGIN{FS="R:\/\/|\">SS<"}{print $2}' | cut -d '<' -f 1)
+sszy_zy=$(echo $sszy_zyq | cut -d '_' -f 1)
 sszy_tmpkey=`expr $(echo "$sszy_zy" | awk -F '' '{print NF}') % 4`
 case "$sszy_tmpkey" in
 "1")
@@ -35,7 +36,7 @@ sszy_server_port=`echo "$sszy_zy" | cut -d ':' -f 2 | cut -d ':' -f 1`
 sszy_key=`echo "$sszy_zy" | cut -d ':' -f 6 | cut -d '/' -f 1`
 sszy_method=`echo "$sszy_zy" | cut -d ':' -f 4 | cut -d ':' -f 1`
 sszy_ssr_type_protocol=`echo "$sszy_zy" | cut -d ':' -f 3 | cut -d ':' -f 1`
-sszy_ssr_type_protocol_custom=`echo "$sszy_zy" | cut -d '=' -f 3 | cut -d '&' -f 1`
+#sszy_ssr_type_protocol_custom=`echo "$sszy_zy" | cut -d '=' -f 3 | cut -d '&' -f 1`
 sszy_ssr_type_obfs=`echo "$sszy_zy" | cut -d ':' -f 5 | cut -d ':' -f 1`
 
 sszy_tmpkey=`expr $(echo "$sszy_key" | awk -F '' '{print NF}') % 4`
@@ -54,6 +55,23 @@ case "$sszy_tmpkey" in
 	;;
 esac
 
+sszy_zy=$(echo $sszy_zyq | cut -d '_' -f 2)
+sszy_tmpkey=`expr $(echo "$sszy_zy" | awk -F '' '{print NF}') % 4`
+case "$sszy_tmpkey" in
+"1")
+	sszy_zy=`echo "$sszy_zy===" | base64 -d`
+	;;
+"2")
+	sszy_zy=`echo "$sszy_zy==" | base64 -d`
+	;;
+"3")
+	sszy_zy=`echo "$sszy_zy=" | base64 -d`
+	;;
+"0")
+	sszy_zy=`echo "$sszy_zy" | base64 -d`
+	;;
+esac
+sszy_ssr_type_protocol_custom=`echo "$sszy_zy" | cut -d '=' -f 3 | cut -d '&' -f 1`
 sszy_ssr_tmpprotoparam=`expr $(echo "$sszy_ssr_type_protocol_custom" | awk -F '' '{print NF}') % 4`
 case "$sszy_ssr_tmpprotoparam" in
 "1")
